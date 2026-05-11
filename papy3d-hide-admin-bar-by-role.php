@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/Papy-3D-Factory/Papy3D-Hide-Admin-Bar-by-Role
  * Description: Hide the WordPress admin bar on the front end for selected user roles.
  * Version: 1.0.0
- * Requires at least: 6.5
+ * Requires at least: 6.4
  * Tested up to: 6.9
  * Requires PHP: 8.1
  * Author: papy3d

@@ -1,9 +1,9 @@
 === Papy3D Hide Admin Bar by Role ===
 Contributors: papy3d
 Tags: admin bar, toolbar, user roles, frontend, users
-Requires at least: 5.8
+Requires at least: 6.4
 Tested up to: 6.9
-Requires PHP: 7.4
+Requires PHP: 8.1
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
