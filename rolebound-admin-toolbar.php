@@ -1,8 +1,8 @@
 <?php
 /**	
- * Plugin Name: Papy3D Hide Admin Bar by Role
- * Plugin URI: https://github.com/Papy-3D-Factory/Papy3D-Hide-Admin-Bar-by-Role
- * Description: Hide the WordPress admin bar on the front end for selected user roles.
+ * Plugin Name: RoleBound Admin Toolbar
+ * Plugin URI: https://github.com/Papy-3D-Factory/RoleBound-Admin-Toolbar
+ * Description: Control WordPress admin toolbar visibility on the front end for selected user roles.
  * Version: 1.0.0
  * Requires at least: 6.4
  * Tested up to: 6.9
@@ -11,7 +11,7 @@
  * Author URI: https://papy-3d-factory.xyz
  * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: papy3d-hide-admin-bar-by-role
+ * Text Domain: rolebound-admin-toolbar
  */
  
 declare(strict_types=1);
@@ -20,10 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-final class Papy3D_Admin_Bar_Role_Controller {
+final class RoleBound_Admin_Toolbar_Controller {
 
-	const OPTION_NAME = 'papy3d_admin_bar_hidden_roles';
-	const PAGE_SLUG   = 'papy3d-hide-admin-bar-by-role';
+	const OPTION_NAME        = 'rolebound_admin_toolbar_hidden_roles';
+	const LEGACY_OPTION_NAME = 'papy3d_admin_bar_hidden_roles';
+	const PAGE_SLUG          = 'rolebound-admin-toolbar';
 
 	public function boot() {
 		add_action( 'admin_menu', array( $this, 'register_options_screen' ) );
@@ -33,8 +34,8 @@ final class Papy3D_Admin_Bar_Role_Controller {
 
 	public function register_options_screen() {
 		add_options_page(
-			esc_html__( 'Papy3D Admin Bar', 'papy3d-hide-admin-bar-by-role' ),
-			esc_html__( 'Papy3D Admin Bar', 'papy3d-hide-admin-bar-by-role' ),
+			esc_html__( 'RoleBound Toolbar', 'rolebound-admin-toolbar' ),
+			esc_html__( 'RoleBound Toolbar', 'rolebound-admin-toolbar' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( $this, 'display_options_screen' )
@@ -43,7 +44,7 @@ final class Papy3D_Admin_Bar_Role_Controller {
 
 	public function register_option_storage() {
 		register_setting(
-			'papy3d_admin_bar_roles_group',
+			'rolebound_admin_toolbar_roles_group',
 			self::OPTION_NAME,
 			array(
 				'type'              => 'array',
@@ -89,7 +90,11 @@ final class Papy3D_Admin_Bar_Role_Controller {
 	}
 
 	private function get_hidden_roles() {
-		$roles = get_option( self::OPTION_NAME, array() );
+		$roles = get_option( self::OPTION_NAME, null );
+
+		if ( null === $roles ) {
+			$roles = get_option( self::LEGACY_OPTION_NAME, array() );
+		}
 
 		if ( ! is_array( $roles ) ) {
 			return array();
@@ -118,20 +123,20 @@ final class Papy3D_Admin_Bar_Role_Controller {
 		?>
 
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Papy3D Hide Admin Bar by Role', 'papy3d-hide-admin-bar-by-role' ); ?></h1>
+			<h1><?php esc_html_e( 'RoleBound Admin Toolbar', 'rolebound-admin-toolbar' ); ?></h1>
 
 			<p>
-				<?php esc_html_e( 'Choose which user roles should not see the WordPress admin bar on the front end.', 'papy3d-hide-admin-bar-by-role' ); ?>
+				<?php esc_html_e( 'Choose which user roles should not see the WordPress admin bar on the front end.', 'rolebound-admin-toolbar' ); ?>
 			</p>
 
 			<form method="post" action="options.php">
-				<?php settings_fields( 'papy3d_admin_bar_roles_group' ); ?>
+				<?php settings_fields( 'rolebound_admin_toolbar_roles_group' ); ?>
 
 				<table class="form-table" role="presentation">
 					<tbody>
 						<tr>
 							<th scope="row">
-								<?php esc_html_e( 'Hidden for roles', 'papy3d-hide-admin-bar-by-role' ); ?>
+								<?php esc_html_e( 'Hidden for roles', 'rolebound-admin-toolbar' ); ?>
 							</th>
 
 							<td>
@@ -151,7 +156,7 @@ final class Papy3D_Admin_Bar_Role_Controller {
 								<?php endforeach; ?>
 
 								<p class="description">
-									<?php esc_html_e( 'The admin bar remains available inside the WordPress dashboard.', 'papy3d-hide-admin-bar-by-role' ); ?>
+									<?php esc_html_e( 'The admin bar remains available inside the WordPress dashboard.', 'rolebound-admin-toolbar' ); ?>
 								</p>
 							</td>
 						</tr>
@@ -169,7 +174,7 @@ final class Papy3D_Admin_Bar_Role_Controller {
 add_action(
 	'plugins_loaded',
 	static function() {
-		$plugin = new Papy3D_Admin_Bar_Role_Controller();
+		$plugin = new RoleBound_Admin_Toolbar_Controller();
 		$plugin->boot();
 	}
 );
