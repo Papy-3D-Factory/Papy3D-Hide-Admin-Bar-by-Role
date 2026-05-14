@@ -1,4 +1,4 @@
-# Papy3D Hide Admin Bar by Role
+# RoleBound Admin Toolbar
 
 A lightweight and modern WordPress plugin that allows administrators to hide the WordPress admin bar on the front end based on user roles.
 
